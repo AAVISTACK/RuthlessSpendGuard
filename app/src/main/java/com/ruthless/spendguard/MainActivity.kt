@@ -190,9 +190,9 @@ fun TransactionsScreen(
                     ) {
                         uiState.allTransactions.forEachIndexed { index, txn ->
                             com.ruthless.spendguard.ui.components.TransactionItem(
-                                emoji = txn.category.emoji,
+                                category = txn.category.emoji,
                                 merchant = txn.merchant,
-                                time = com.ruthless.spendguard.ui.components.formatTime(txn.timestamp),
+                                time = txn.timestamp,
                                 amount = txn.amount,
                                 isWaste = txn.type == com.ruthless.spendguard.data.entities.TransactionType.WASTE
                             )
