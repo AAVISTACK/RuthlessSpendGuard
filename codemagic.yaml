@@ -1,0 +1,44 @@
+workflows:
+  android-release:
+    name: Android Release Build
+    max_build_duration: 60
+    environment:
+      android_signing:
+        - keystore_reference
+      vars:
+        PACKAGE_NAME: "com.ruthless.spendguard"
+    scripts:
+      - name: Set Android SDK location
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+      - name: Build Android release APK
+        script: |
+          cd $CM_BUILD_DIR
+          ./gradlew assembleRelease --stacktrace
+    artifacts:
+      - app/build/outputs/**/*.apk
+      - app/build/outputs/**/*.aab
+    publishing:
+      email:
+        recipients:
+          - user@example.com
+        notify:
+          success: true
+          failure: true
+
+  android-debug:
+    name: Android Debug Build
+    max_build_duration: 30
+    environment:
+      vars:
+        PACKAGE_NAME: "com.ruthless.spendguard"
+    scripts:
+      - name: Set Android SDK location
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+      - name: Build Android debug APK
+        script: |
+          cd $CM_BUILD_DIR
+          ./gradlew assembleDebug --stacktrace
+    artifacts:
+      - app/build/outputs/**/*.apk
