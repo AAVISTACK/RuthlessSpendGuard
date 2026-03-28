@@ -67,22 +67,24 @@ class DashboardViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch {
-            // Combine all flows
-            combine(
-                repository.getTodayTotal(),
-                repository.getTodayWaste(),
-                repository.getTodayTransactions(),
-                repository.getAllTransactions(),
-                preferences.dailyLimit,
-                repository.getAllStreaks(),
-                repository.getActiveGoals(),
-                preferences.lockdownActive,
-                preferences.voiceMode,
-                preferences.voiceEnabled,
-                preferences.impulseDelayEnabled,
-                preferences.shameScreenEnabled,
-                preferences.dopamineModeActive
-            ) { values ->
+            // Use Iterable<Flow<*>> overload to avoid vararg type-inference issues
+            // with heterogeneous flow types (Double, List<T>, Boolean, VoiceMode)
+            val flows: List<Flow<*>> = listOf(
+                repository.getTodayTotal(),          // 0: Double
+                repository.getTodayWaste(),          // 1: Double
+                repository.getTodayTransactions(),   // 2: List<Transaction>
+                repository.getAllTransactions(),      // 3: List<Transaction>
+                preferences.dailyLimit,              // 4: Double
+                repository.getAllStreaks(),           // 5: List<Streak>
+                repository.getActiveGoals(),         // 6: List<Goal>
+                preferences.lockdownActive,          // 7: Boolean
+                preferences.voiceMode,               // 8: VoiceMode
+                preferences.voiceEnabled,            // 9: Boolean
+                preferences.impulseDelayEnabled,     // 10: Boolean
+                preferences.shameScreenEnabled,      // 11: Boolean
+                preferences.dopamineModeActive       // 12: Boolean
+            )
+            combine(flows) { values ->
                 val todayTotal = values[0] as Double
                 val todayWaste = values[1] as Double
                 @Suppress("UNCHECKED_CAST")
