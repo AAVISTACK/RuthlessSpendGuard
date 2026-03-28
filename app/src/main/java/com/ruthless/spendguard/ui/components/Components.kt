@@ -575,3 +575,111 @@ fun NavTab(
     }
 }
 
+
+// ─── INSIGHT CARD ─────────────────────────────────────────────────────────────
+
+@Composable
+fun InsightCard(text: String, modifier: Modifier = Modifier) {
+    SGCard(modifier = modifier, accentColor = SG.Amber) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            Text("◈", fontSize = 14.sp, color = SG.Amber)
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyMedium,
+                color = SG.TextBody,
+                lineHeight = 20.sp
+            )
+        }
+    }
+}
+
+// ─── IMPULSE OVERLAY ──────────────────────────────────────────────────────────
+
+@Composable
+fun ImpulseOverlay(
+    merchant: String,
+    secondsLeft: Int,
+    onSkip: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.85f)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(36.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text("\u23F3", fontSize = 48.sp, color = SG.Amber)
+            Text(
+                "IMPULSE DETECTED",
+                style = MaterialTheme.typography.headlineLarge,
+                color = SG.Amber,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                merchant,
+                style = MaterialTheme.typography.titleLarge,
+                color = SG.TextPrimary,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                "Wait ${secondsLeft}s before you spend",
+                style = MaterialTheme.typography.bodyLarge,
+                color = SG.TextBody,
+                textAlign = TextAlign.Center
+            )
+            Spacer(Modifier.height(8.dp))
+            SGButton("SKIP DELAY", onClick = onSkip, color = SG.TextDim, outlined = true)
+        }
+    }
+}
+
+// ─── REALITY CARD ─────────────────────────────────────────────────────────────
+
+@Composable
+fun RealityCard(dailyWaste: Double, modifier: Modifier = Modifier) {
+    if (dailyWaste <= 0.0) return
+    val monthly = dailyWaste * 30
+    val yearly = dailyWaste * 365
+    SGCard(modifier = modifier, accentColor = SG.Red) {
+        SectionLabel("REALITY CHECK")
+        Spacer(Modifier.height(10.dp))
+        Text(
+            "If you keep spending \u20B9${dailyWaste.toLong()} on waste daily:",
+            style = MaterialTheme.typography.bodyMedium,
+            color = SG.TextBody
+        )
+        Spacer(Modifier.height(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "\u20B9${monthly.toLong()}",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = SG.Red,
+                    fontWeight = FontWeight.Bold
+                )
+                Text("per month", style = MaterialTheme.typography.labelSmall, color = SG.TextDim)
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "\u20B9${yearly.toLong()}",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = SG.Red,
+                    fontWeight = FontWeight.Bold
+                )
+                Text("per year", style = MaterialTheme.typography.labelSmall, color = SG.TextDim)
+            }
+        }
+    }
+}
