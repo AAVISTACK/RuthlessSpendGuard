@@ -136,7 +136,7 @@ class DashboardViewModel @Inject constructor(
             val essential = breakdown.filter { it.category == TransactionCategory.ESSENTIAL.name || it.category == TransactionCategory.FUEL.name }.sumOf { it.total }
 
             val merchants = repository.getTopMerchants(weekStart)
-            val merchantData = merchants.map { MerchantData(it.merchant, it.count, it.total) }
+            val merchantData = merchants.map { MerchantData(it.name, it.count, it.total) }
 
             _uiState.update { state ->
                 state.copy(
