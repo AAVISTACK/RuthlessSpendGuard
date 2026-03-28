@@ -170,9 +170,9 @@ fun DashboardScreen(
                     ) {
                         uiState.transactions.take(5).forEachIndexed { index, txn ->
                             TransactionItem(
-                                emoji = txn.category.emoji,
+                                category = txn.category.emoji,
                                 merchant = txn.merchant,
-                                time = formatTime(txn.timestamp),
+                                time = txn.timestamp,
                                 amount = txn.amount,
                                 isWaste = txn.type == TransactionType.WASTE
                             )
