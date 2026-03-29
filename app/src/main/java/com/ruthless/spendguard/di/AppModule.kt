@@ -3,7 +3,6 @@ package com.ruthless.spendguard.di
   import android.content.Context
   import androidx.room.Room
   import com.ruthless.spendguard.data.SpendGuardDatabase
-  import com.ruthless.spendguard.data.UserPreferencesManager
   import com.ruthless.spendguard.data.dao.*
   import com.ruthless.spendguard.util.VoiceFeedbackManager
   import dagger.Module
@@ -41,6 +40,7 @@ package com.ruthless.spendguard.di
   @InstallIn(SingletonComponent::class)
   object PreferencesModule {
 
+      // UserPreferencesManager is in the same 'di' package — no import needed
       @Provides
       @Singleton
       fun provideUserPreferences(@ApplicationContext context: Context): UserPreferencesManager =
