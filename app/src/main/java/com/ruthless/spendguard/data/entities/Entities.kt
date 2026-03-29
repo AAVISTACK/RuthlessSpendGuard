@@ -2,8 +2,6 @@ package com.ruthless.spendguard.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.ruthless.spendguard.data.Converters
 
 // ─── Transaction Entity ───────────────────────────────────────────────────────
 
