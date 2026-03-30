@@ -3,7 +3,7 @@ package com.ruthless.spendguard.di
   import android.content.Context
   import androidx.room.Room
   import com.ruthless.spendguard.data.SpendGuardDatabase
-  import com.ruthless.spendguard.data.dao.*
+  import com.ruthless.spendguard.data.dao.TransactionDao
   import com.ruthless.spendguard.util.VoiceFeedbackManager
   import dagger.Module
   import dagger.Provides
@@ -28,19 +28,15 @@ package com.ruthless.spendguard.di
               .build()
       }
 
-      @Provides @Singleton fun provideTransactionDao(db: SpendGuardDatabase): TransactionDao = db.transactionDao()
-      @Provides @Singleton fun provideDailySummaryDao(db: SpendGuardDatabase): DailySummaryDao = db.dailySummaryDao()
-      @Provides @Singleton fun provideGoalDao(db: SpendGuardDatabase): GoalDao = db.goalDao()
-      @Provides @Singleton fun provideKeywordDao(db: SpendGuardDatabase): KeywordDao = db.keywordDao()
-      @Provides @Singleton fun provideStreakDao(db: SpendGuardDatabase): StreakDao = db.streakDao()
-      @Provides @Singleton fun provideVoiceJournalDao(db: SpendGuardDatabase): VoiceJournalDao = db.voiceJournalDao()
+      @Provides
+      @Singleton
+      fun provideTransactionDao(db: SpendGuardDatabase): TransactionDao = db.transactionDao()
   }
 
   @Module
   @InstallIn(SingletonComponent::class)
   object PreferencesModule {
 
-      // UserPreferencesManager is in the same 'di' package — no import needed
       @Provides
       @Singleton
       fun provideUserPreferences(@ApplicationContext context: Context): UserPreferencesManager =
