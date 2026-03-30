@@ -136,7 +136,7 @@ class SpendGuardRepository @Inject constructor(
     suspend fun resetStreak(type: StreakType) = streakDao.resetStreak(type.name)
 
     suspend fun ensureStreaksExist() {
-        StreakType.entries.forEach { type ->
+        StreakType.values().forEach { type ->
             if (streakDao.getStreakByType(type.name) == null) {
                 streakDao.upsert(Streak(type = type))
             }
