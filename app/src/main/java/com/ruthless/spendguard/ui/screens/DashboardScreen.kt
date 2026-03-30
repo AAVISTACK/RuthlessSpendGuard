@@ -109,7 +109,7 @@ fun DashboardScreen(
                             StreakType.NO_COLD_DRINK -> "No cold drinks" to s.currentCount
                         }
                     }
-                    StreakRow(streaks = pairs)
+                    StreakRow(pairs = pairs)
                 }
             }
 
